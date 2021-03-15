@@ -3,7 +3,7 @@ CSC3916 HW3
 File: Server.js
 Description: Web API scaffolding for Movie API
  */
-
+require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
@@ -64,7 +64,7 @@ router.route('/signup')
     }
 })
     .all(function (req, res){
-        res.json({success: false, msg: 'This method is not supported'});
+        res.json({success: false, msg: 'method not supported'});
     });
 
 router.route('/signin')
@@ -96,13 +96,13 @@ router.route('/movies')
         if(!req.body.title || !req.body.update){
             res.json({success:false, message: "old title and new title required"});
         }else{
-            Movie.update(req.body.title, req.body.update, function(err, movie) {
+            Movie.findOneAndUpdate(req.body.title, req.body.update, function(err, movie) {
                 if(err){
-                    res.status(403).json({success:false, message: "Can not update Movie"});
+                    res.status(403).json({success:false, message: "cant update movie"});
                 }else if(!movie){
-                    res.status(403).json({success: false, message: "Can not find Movie"});
+                    res.status(403).json({success: false, message: "cant update movie"});
                 }else{
-                    res.status(200).json({success: true, message:"Successfully updated title"});
+                    res.status(200).json({success: true, message:"successfully updated movie title"});
                 }
             });
         }
@@ -111,9 +111,9 @@ router.route('/movies')
         if(!req.body.title){
             res.json({success:false, message:"provide movie title to delete"});
         }else{
-            Movie.remove(req.body.title, function(err, movie){
+            Movie.findOneAndDelete(req.body.title, function(err, movie){
                 if(err){
-                    res.status(403).json({success:false, message:"error cant delete movie"});
+                    res.status(403).json({success:false, message:"cant delete movie"});
                 }else if(!movie){
                     res.status(403).json({success:false, message: "cant find movie"});
                 }else{
@@ -143,7 +143,7 @@ router.route('/movies')
     .post(authJwtController.isAuthenticated, function (req,res){
         console.log(req.body);
         if(!req.body.title || !req.body.year_released || !req.body.genre || !req.body.actors[0] || !req.body.actors[1] || !req.body.actors[2]) {
-            res.json({success: false, message: "title, year released, genre, and three actors required"});
+            res.json({success: false, message: "title, released year, genre, and three actors required"});
         }else{
             var mov = new Movie();
 
