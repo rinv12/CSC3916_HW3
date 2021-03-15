@@ -92,8 +92,25 @@ router.route('/signin')
 });
 
 router.route('/movies')
+    .put(authJwtController.isAuthenticated, function(req, res){
+        if(!req.body.title || !req.body.update){
+            res.json({success:false, message: "old title and new title required"});
+        }else{
+            Movie.update(req.body.title, req.body.update, function(err, movie) {
+                if(err){
+                    res.status(403).json({success:false, message: "Can not update Movie"});
+                }else if(!movie){
+                    res.status(403).json({success: false, message: "Can not find Movie"});
+                }else{
+                    res.status(200).json({success: true, message:"Successfully updated title"});
+                }
+            });
+        }
+    })
     .delete(authJwtController.isAuthenticated, function (req, res){
-        if(req.body.title){
+        if(!req.body.title){
+            res.json({success:false, message:"provide movie title to delete"});
+        }else{
             Movie.remove(req.body.title, function(err, movie){
                 if(err){
                     res.status(403).json({success:false, message:"error cant delete movie"});
@@ -103,46 +120,48 @@ router.route('/movies')
                     res.status(200).json({success:true, message: "movie deleted"})
                 }
             })
-        }else{
-            res.json({success:false, message:"provide movie title to delete"});
         }
     })
     .get(authJwtController.isAuthenticated, function (req, res){
-        if(req.body){
-            Movie.find(req.body.select("title year_released genre actors").exec(function(err, movie){
-                if(err){
-                res.status(403).json({success:false, message:"unable to find the movie"});
-            }if(movie){
-                res.status(200).json({success:true, message: "movie found", movie: movie});
-                }else{
-                    res.status(404).json({success:false, message: "movie not found"});
-                }
-            }))
-        }else{
-            res.json({success: false, message: "provide a movie title to show"});
+            if (!req.body){
+                res.json({success:false, message: "provide a movie title"});
+            }else{
+                Movie.find(req.body).select("title year_released genre actors").exec(function(err, movie) {
+                    if (err) {
+                        res.status(403).json({success: false, message: "unable to find movie"});
+                    }
+                    if (movie) {
+                        res.status(200).json({success: true, message: "movie found", Movie: movie})
+                    } else {
+                        res.status(404).json({success: false, message: "movie not found"});
+
+                    }
+                })
+            }
         }
-    })
+    )
     .post(authJwtController.isAuthenticated, function (req,res){
         console.log(req.body);
-        if(req.body.title || req.body.year_released || req.body.genre || req.body.actors[0] || req.body.actors[1] || req.body.actors[2]){
+        if(!req.body.title || !req.body.year_released || !req.body.genre || !req.body.actors[0] || !req.body.actors[1] || !req.body.actors[2]) {
+            res.json({success: false, message: "title, year released, genre, and three actors required"});
+        }else{
             var mov = new Movie();
 
             mov.title = req.body.title;
             mov.year_released = req.body.year_released;
             mov.genre = req.body.genre;
             mov.actors = req.body.actors;
-            mov.save(function(err){
-                if(err){
-                    if(err.code == 11000){
-                        return res.json({success: false, message: "username already exist"});
-                    }else{
+
+            mov.save(function (err) {
+                if (err) {
+                    if (err.code == 11000)
+                        return res.json({success: false, message: "Username already exists!"});
+                    else
                         return res.json(err);
-                    }
                 }
             })
-            res.json({success:true, message: "movie created"});
-        }else{
-            res.json({success: false, message: "title, year released, genre, and three actors required"});
+            res.json({success: true, message: 'movie added.'});
+
         }
     })
     .all(function(req, res){
