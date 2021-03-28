@@ -145,14 +145,14 @@ router.route('/movies')
         if(!req.body.title || !req.body.yearReleased || !req.body.genre || !req.body.actors[0] || !req.body.actors[1] || !req.body.actors[2]) {
             res.json({success: false, message: "title, released year, genre, and three actors required"});
         }else{
-            var mov = new Movie();
+            var movie = new Movie();
 
-            mov.title = req.body.title;
-            mov.yearReleased = req.body.yearReleased;
-            mov.genre = req.body.genre;
-            mov.actors = req.body.actors;
+            movie.title = req.body.title;
+            movie.yearReleased = req.body.yearReleased;
+            movie.genre = req.body.genre;
+            movie.actors = req.body.actors;
 
-            mov.save(function (err) {
+            movie.save(function (err) {
                 if (err) {
                     res.status(401).send({success: false, message: "unexpected error occurred."})
                 }else{
