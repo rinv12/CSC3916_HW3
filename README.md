@@ -1,10 +1,11 @@
 # CSC3916_HW3
 
-Continuously getting Status: 503 Service Unavailable and JSONError: Unexpected token '<' at 1:1 <!DOCTYPE html> ^ for sign in.
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/e187ea800241c48f0c36#?env%5Bhw3_rin%5D=W3sia2V5IjoidXNlcm5hbWUiLCJ2YWx1ZSI6InJpbi4xNjE1Nzk0MTM5ODQ0QGdtYWlsLmNvbSIsImVuYWJsZWQiOnRydWV9XQ==)
+Code sometimes crashes. Please redeploy whenever it happens
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/aa76f58ef9c306591330#?env%5Bhw3_rin%5D=W3sia2V5IjoidXNlcm5hbWUiLCJ2YWx1ZSI6Imxpc2FAZ21haWwuY29tIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJ0b2tlbiIsInZhbHVlIjoiSldUIGV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpwWkNJNklqWXdOakF4TWpnek1UTXpPRFV6TURBd05EVTBNemd5TkNJc0luVnpaWEp1WVcxbElqb2liR2x6WVVCbmJXRnBiQzVqYjIwaUxDSnBZWFFpT2pFMk1UWTVNRGt5TkRaOS4zMWF1ZV9Qa2g5c3N3OHNrZHZzcmtVSzF6cldWcTlwN2ZIR29rQUQzcU1FIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJwYXNzd29yZCIsInZhbHVlIjoibHVsdSIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoibmFtZSIsInZhbHVlIjoibGlzYSIsImVuYWJsZWQiOnRydWV9XQ==)
 
 Heroku app for assignment5:
 https://csci3916-hw5-rin.herokuapp.com/
 
-Heroku app for assignment3:https://csci3916-hw3-rin.herokuapp.com/
+Heroku app for assignment3:
+https://csci3916-hw3-rin.herokuapp.com/

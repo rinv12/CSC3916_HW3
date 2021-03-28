@@ -36,4 +36,4 @@ var movieSchema = new Schema({
 });
 
 //exporting model back to the server
-module.exports = mongoose.model('Movies', movieSchema)
+module.exports = mongoose.model('Movie', movieSchema)
