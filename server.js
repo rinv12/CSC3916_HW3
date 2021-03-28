@@ -80,7 +80,7 @@ router.route('/signin')
 
         user.comparePassword(userNew.password, function(isMatch) {
             if (isMatch) {
-                var userToken = { id: user.id, username: user.username };
+                var userToken = { id: user.id, username: user.username};
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
                 res.json ({success: true, token: 'JWT ' + token});
             }
@@ -126,7 +126,7 @@ router.route('/movies')
             if (!req.body){
                 res.json({success:false, message: "provide a movie title"});
             }else{
-                Movie.find(req.body).select("title year_released genre actors").exec(function(err, movie) {
+                Movie.findOne(req.body).select("title yearReleased genre actors").exec(function(err, movie) {
                     if (err) {
                         res.status(403).json({success: false, message: "unable to find movie"});
                     }
@@ -142,22 +142,21 @@ router.route('/movies')
     )
     .post(authJwtController.isAuthenticated, function (req,res){
         console.log(req.body);
-        if(!req.body.title || !req.body.year_released || !req.body.genre || !req.body.actors[0] || !req.body.actors[1] || !req.body.actors[2]) {
+        if(!req.body.title || !req.body.yearReleased || !req.body.genre || !req.body.actors[0] || !req.body.actors[1] || !req.body.actors[2]) {
             res.json({success: false, message: "title, released year, genre, and three actors required"});
         }else{
             var mov = new Movie();
 
             mov.title = req.body.title;
-            mov.year_released = req.body.year_released;
+            mov.yearReleased = req.body.yearReleased;
             mov.genre = req.body.genre;
             mov.actors = req.body.actors;
 
             mov.save(function (err) {
                 if (err) {
-                    if (err.code == 11000)
-                        return res.json({success: false, message: "Username already exists!"});
-                    else
-                        return res.json(err);
+                    res.status(401).send({success: false, message: "unexpected error occurred."})
+                }else{
+                    res.status(200).send({success: true, message: "movie successfully added"})
                 }
             })
             res.json({success: true, message: 'movie added.'});

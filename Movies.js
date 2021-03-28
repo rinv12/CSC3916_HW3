@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt-nodejs')
+var bcrypt = require('bcrypt-nodejs');
 
 mongoose.Promise = global.Promise;
 
@@ -18,7 +18,7 @@ var movieSchema = new Schema({
         trim: true,
         required: 'Title required',
     },
-    year_released:{
+    yearReleased:{
         type: String,
         trim: true,
         required: 'Year released is required',
